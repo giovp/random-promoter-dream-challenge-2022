@@ -40,8 +40,9 @@ class AutosomeDataProcessor(DataProcessor):
             indices = list(range(len(self.train)))
             out = KFold(n_splits=5, random_state=seed, shuffle=True).split(indices)
             train_idx, val_idx = list(out)[fold]
-            self.train = self.train.iloc[train_idx]
-            self.valid = self.train.iloc[val_idx]
+            self.valid = self.train.iloc[val_idx].copy()
+            self.train = self.train.iloc[train_idx].copy()
+            
 
         self.test = preprocess_df(
             path=path_to_test_data, seqsize=seqsize, plasmid_path=plasmid_path
